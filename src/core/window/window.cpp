@@ -19,6 +19,7 @@ namespace CE {
 			}
 
 			glfwMakeContextCurrent(window);
+			glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
 			if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 				// Failed to initialize GLAD
@@ -26,10 +27,10 @@ namespace CE {
 				return -1;
 			}
 
-			// Use the entire window
-			glViewport(0, 0, width, height);
-
-			glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+			// Configure global OpenGL state
+			glEnable(GL_DEPTH_TEST);
+			glEnable(GL_FRAMEBUFFER_SRGB); // Use sRGB
+			glfwSwapInterval(1); // Turn on vsync for smoother rendering and so OpenGL doesn't draw faster than the monitor refresh rate. Otherwise the program might use 100% CPU and GPU
 
 			return 0;
 		}
