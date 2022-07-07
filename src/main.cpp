@@ -2,29 +2,50 @@
 
 #include "main.hpp"
 
-// Input callback. Process all input
-void processInput(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) // Check if the ESC key was pressed
-		glfwSetWindowShouldClose(window, true);            // If so, close the window
+// Settings
+// --------
 
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) // Check if the Q key was pressed
+// Input callback. Process all input
+void processInput(CE::core::Window window, CE::core::Camera camera) {
+	float cameraSpeed = 1.0f; // Adjust accordingly
+
+	if (glfwGetKey(window.window, GLFW_KEY_ESCAPE) == GLFW_PRESS) // Check if the ESC key was pressed
+		glfwSetWindowShouldClose(window.window, true);            // If so, close the window
+
+	if (glfwGetKey(window.window, GLFW_KEY_Q) == GLFW_PRESS) // Check if the Q key was pressed
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);    // If so, change draw mode to GL_FILL
 
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) // Check if the E key was pressed
+	if (glfwGetKey(window.window, GLFW_KEY_E) == GLFW_PRESS) // Check if the E key was pressed
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);    // If so, change draw mode to GL_LINE / wireframe
 
-	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) // Check if the C key was pressed
+	if (glfwGetKey(window.window, GLFW_KEY_C) == GLFW_PRESS) // Check if the C key was pressed
 		glfwSetClipboardString(NULL, "Hello this is a clipboard test");
 
 
-	if ((glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) && (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS))
-		glfwSetWindowShouldClose(window, true); // If so, close the window          
+	if ((glfwGetMouseButton(window.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) && (glfwGetMouseButton(window.window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window.window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS))
+		glfwSetWindowShouldClose(window.window, true); // If so, close the window          
 
-	if ((glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS))
+	if ((glfwGetMouseButton(window.window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	if ((glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS))
+	if ((glfwGetMouseButton(window.window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window.window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+
+	if (glfwGetKey(window.window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+		//cameraSpeed = 0.1f * deltaTime;
+	if (glfwGetKey(window.window, GLFW_KEY_W) == GLFW_PRESS)
+		camera.ProcessKeyboard(CE::core::FORWARD, cameraSpeed);
+	if (glfwGetKey(window.window, GLFW_KEY_S) == GLFW_PRESS)
+		camera.ProcessKeyboard(CE::core::BACKWARD, cameraSpeed);
+	if (glfwGetKey(window.window, GLFW_KEY_A) == GLFW_PRESS)
+		camera.ProcessKeyboard(CE::core::LEFT, cameraSpeed);
+	if (glfwGetKey(window.window, GLFW_KEY_D) == GLFW_PRESS)
+		camera.ProcessKeyboard(CE::core::RIGHT, cameraSpeed);
+	if (glfwGetKey(window.window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		camera.ProcessKeyboard(CE::core::UP, cameraSpeed);
+	if (glfwGetKey(window.window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		camera.ProcessKeyboard(CE::core::DOWN, cameraSpeed);
 }
 
 int main() {
@@ -36,6 +57,12 @@ int main() {
 	window.create(800, 600, "Constellation Engine");
 
 	window.clearColor = { 0.5f, 0.0f, 0.4f, 1.0f };
+
+
+	CE::core::Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+	float lastX = window.width / 2.0f;
+	float lastY = window.height / 2.0f;
+	bool firstMouse = true;
 
 	// Build and compile our shader program
 	// ------------------------------------
@@ -177,7 +204,7 @@ int main() {
 	while (!window.shouldClose) {
 		// Input
 		// -----
-		processInput(window.window);
+		processInput(window, camera);
 
 		if (glfwGetKey(window.window, GLFW_KEY_RIGHT)) {
 			if (window.clearColor[1] < 1.0f) {
@@ -230,7 +257,7 @@ int main() {
 
 		// View transformation
 		glm::mat4 view = glm::mat4(1.0f);
-		// TODO: Get view matrix from camera and set it to view
+		view = camera.GetViewMatrix();
 		cubeShader.setMat4("view", view);
 
 		// Bind texture1

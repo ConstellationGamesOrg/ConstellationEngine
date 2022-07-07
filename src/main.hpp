@@ -7,6 +7,7 @@
 // --------------------
 #include "core/window/window.hpp"
 #include "core/graphics/graphics.hpp"
+#include "core/camera/camera.hpp"
 #include "utils/shader/shader.hpp"
 
 // 3rd Party Library Headers
