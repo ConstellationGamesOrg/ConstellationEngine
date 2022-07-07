@@ -3,6 +3,8 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\core\init\init.cpp" />
+    <ClCompile Include="src\core\window\window.cpp" />
+    <ClCompile Include="contrib\glad\src\glad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AUTHORS.md" />
@@ -13,5 +15,6 @@
   <ItemGroup>
     <ClInclude Include="src\main.hpp" />
     <ClInclude Include="src\core\init\init.hpp" />
+    <ClInclude Include="src\core\window\window.hpp" />
   </ItemGroup>
 </Project>

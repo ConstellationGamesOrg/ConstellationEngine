@@ -6,6 +6,7 @@
 // User-Defined Headers
 // --------------------
 #include "core/init/init.hpp"
+#include "core/window/window.hpp"
 
 // 3rd Party Library Headers
 // -------------------------

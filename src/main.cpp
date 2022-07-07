@@ -2,10 +2,17 @@
 
 #include "main.hpp"
 
-int main()
-{
+int main() {
 	CE::core::init::graphicsInit();
-	std::cout << "Constellation Engine\n";
+	CE::core::Window window;
+
+	window.create(800, 600, "Constellation Engine");
+
+	while (!window.shouldClose) {
+		window.update();
+	}
+
+	window.cleanup();
 
 	// Terminate GLFW, clearing any resources allocated by GLFW
 	glfwTerminate();

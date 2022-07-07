@@ -162,8 +162,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="contrib\glad\src\glad.cpp" />
     <ClCompile Include="src\core\init\init.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\core\window\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AUTHORS.md" />
@@ -174,6 +176,7 @@
   <ItemGroup>
     <ClInclude Include="src\core\init\init.hpp" />
     <ClInclude Include="src\main.hpp" />
+    <ClInclude Include="src\core\window\window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
