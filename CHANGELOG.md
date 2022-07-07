@@ -29,6 +29,9 @@
 * Added src/core/window/
 * Added src/core/window/window.cpp
 * Added src/core/window/window.hpp
+* Added src/utils/
+* Added src/utils/utils.cpp
+* Added src/utils/utils.hpp
 * Added AUTHORS.md
 * Added CHANGELOG.md
 * Added ConstellationEngine.sln

@@ -5,6 +5,7 @@
     <ClCompile Include="src\core\init\init.cpp" />
     <ClCompile Include="src\core\window\window.cpp" />
     <ClCompile Include="contrib\glad\src\glad.cpp" />
+    <ClCompile Include="src\utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AUTHORS.md" />
@@ -16,5 +17,6 @@
     <ClInclude Include="src\main.hpp" />
     <ClInclude Include="src\core\init\init.hpp" />
     <ClInclude Include="src\core\window\window.hpp" />
+    <ClInclude Include="src\utils\utils.hpp" />
   </ItemGroup>
 </Project>
