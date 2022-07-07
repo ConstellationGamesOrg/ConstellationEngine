@@ -6,6 +6,10 @@
 #include <glad/glad.hpp>
 #include <GLFW/glfw3.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 // Standard Library Headers
 // ------------------------
 #include <iostream>
@@ -24,8 +28,11 @@ namespace CE {
 
 			bool shouldClose = false;
 
+			glm::vec4 clearColor;
+
 			int create(int width, int height, std::string title);
 			int update();
+			int clear();
 			int cleanup();
 		};
 	}

@@ -35,12 +35,20 @@ namespace CE {
 		}
 
 		int Window::update() {
+			glfwSwapBuffers(window);
+			glfwPollEvents();
+
 			if (glfwWindowShouldClose(window)) {
 				shouldClose = true;
 			}
 
-			glfwSwapBuffers(window);
-			glfwPollEvents();
+			return 0;
+		}
+
+		int Window::clear()
+		{
+			glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			return 0;
 		}

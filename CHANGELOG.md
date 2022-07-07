@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+* Added functions to update the window, clear buffers and change the fill color
+
 -------------------------------------------------------------------------------------------------------------
 
 ## [0.1.0]
