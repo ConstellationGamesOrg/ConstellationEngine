@@ -21,6 +21,11 @@
 * Added data/textures/
 * Added src/
 * Added src/main.cpp
+* Added src/main.hpp
+* Added src/core/
+* Added src/core/init/
+* Added src/core/init/init.cpp
+* Added src/core/init/init.hpp
 * Added AUTHORS.md
 * Added CHANGELOG.md
 * Added ConstellationEngine.sln

@@ -4,5 +4,10 @@
 
 int main()
 {
+	CE::core::init::graphicsInit();
 	std::cout << "Constellation Engine\n";
+
+	// Terminate GLFW, clearing any resources allocated by GLFW
+	glfwTerminate();
+	return 0;
 }

@@ -5,6 +5,7 @@
 
 // User-Defined Headers
 // --------------------
+#include "core/init/init.hpp"
 
 // 3rd Party Library Headers
 // -------------------------
