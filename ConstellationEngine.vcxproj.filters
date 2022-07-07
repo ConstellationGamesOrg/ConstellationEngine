@@ -22,6 +22,7 @@
     <ClInclude Include="src\utils\utils.hpp" />
     <ClInclude Include="src\core\graphics\graphics.hpp" />
     <ClInclude Include="src\utils\shader\shader.hpp" />
+    <ClInclude Include="src\core\camera\camera.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\textures\PixelLogo.png" />

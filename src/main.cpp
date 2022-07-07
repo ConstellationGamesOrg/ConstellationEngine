@@ -2,38 +2,98 @@
 
 #include "main.hpp"
 
+// Settings
+// --------
+// Timing
+float deltaTime = 0.0f;	// deltaTime is the time between current frame and last frame
+float lastFrame = 0.0f;
+
+// Graphics
+CE::core::Graphics graphics;
+
+// Window
+CE::core::Window window;
+
+// Camera
+CE::core::Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+float lastX = window.width / 2.0f;
+float lastY = window.height / 2.0f;
+bool firstMouse = true;
+
+
+
+// Callback functions
+// ------------------
+// Whenever the window size changes (by OS or user resize) this callback function executes
+void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
+}
+
 // Input callback. Process all input
-void processInput(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) // Check if the ESC key was pressed
-		glfwSetWindowShouldClose(window, true);            // If so, close the window
+void processInput(CE::core::Window window, CE::core::Camera* camera, float deltaTime) {
 
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) // Check if the Q key was pressed
+	if (glfwGetKey(window.window, GLFW_KEY_ESCAPE) == GLFW_PRESS) // Check if the ESC key was pressed
+		glfwSetWindowShouldClose(window.window, true);            // If so, close the window
+	if (glfwGetKey(window.window, GLFW_KEY_Q) == GLFW_PRESS) // Check if the Q key was pressed
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);    // If so, change draw mode to GL_FILL
-
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) // Check if the E key was pressed
+	if (glfwGetKey(window.window, GLFW_KEY_E) == GLFW_PRESS) // Check if the E key was pressed
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);    // If so, change draw mode to GL_LINE / wireframe
 
-	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) // Check if the C key was pressed
-		glfwSetClipboardString(NULL, "Hello this is a clipboard test");
 
+	if (glfwGetKey(window.window, GLFW_KEY_W) == GLFW_PRESS)
+		camera->ProcessKeyboard(CE::core::FORWARD, deltaTime);
+	if (glfwGetKey(window.window, GLFW_KEY_S) == GLFW_PRESS)
+		camera->ProcessKeyboard(CE::core::BACKWARD, deltaTime);
+	if (glfwGetKey(window.window, GLFW_KEY_A) == GLFW_PRESS)
+		camera->ProcessKeyboard(CE::core::LEFT, deltaTime);
+	if (glfwGetKey(window.window, GLFW_KEY_D) == GLFW_PRESS)
+		camera->ProcessKeyboard(CE::core::RIGHT, deltaTime);
+	if (glfwGetKey(window.window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		camera->ProcessKeyboard(CE::core::UP, deltaTime);
+	if (glfwGetKey(window.window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		camera->ProcessKeyboard(CE::core::DOWN, deltaTime);
+}
 
-	if ((glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) && (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS))
-		glfwSetWindowShouldClose(window, true); // If so, close the window          
+// Mouse callback. Whenever the mouse moves, this callback is called
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+{
+	float xpos = static_cast<float>(xposIn);
+	float ypos = static_cast<float>(yposIn);
 
-	if ((glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS))
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
 
-	if ((glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) && (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS))
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // Reversed since y-coordinates go from bottom to top
+
+	lastX = xpos;
+	lastY = ypos;
+
+	camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
+// Scroll callback. Whenever the mouse scroll wheel scrolls, this callback is called
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
 int main() {
-	CE::core::Graphics graphics;
-	CE::core::Window window;
-
 	graphics.create();
 
 	window.create(800, 600, "Constellation Engine");
+
+	// Setup any callback functions
+	glfwSetFramebufferSizeCallback(window.window, framebufferSizeCallback);
+	glfwSetCursorPosCallback(window.window, mouse_callback);
+	glfwSetScrollCallback(window.window, scroll_callback);
+
+	// Tell GLFW to capture our mouse
+	glfwSetInputMode(window.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	window.clearColor = { 0.5f, 0.0f, 0.4f, 1.0f };
 
@@ -172,12 +232,29 @@ int main() {
 
 
 
+	// Tell OpenGL for each sampler to which texture unit it belongs to
+	// ----------------------------------------------------------------
+	// Activate the shader
+	cubeShader.use();
+	// Either set it via the texture class
+	cubeShader.setInt("texture1", 0);
+
+
+
 	// Render loop
 	// -----------
 	while (!window.shouldClose) {
+		// Per-frame time logic
+		// --------------------
+		float currentFrame = static_cast<float>(glfwGetTime());
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+
+
 		// Input
 		// -----
-		processInput(window.window);
+		processInput(window, &camera, deltaTime);
 
 		if (glfwGetKey(window.window, GLFW_KEY_RIGHT)) {
 			if (window.clearColor[1] < 1.0f) {
@@ -230,7 +307,7 @@ int main() {
 
 		// View transformation
 		glm::mat4 view = glm::mat4(1.0f);
-		// TODO: Get view matrix from camera and set it to view
+		view = camera.GetViewMatrix();
 		cubeShader.setMat4("view", view);
 
 		// Bind texture1

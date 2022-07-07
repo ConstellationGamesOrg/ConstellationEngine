@@ -178,6 +178,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\camera\camera.hpp" />
     <ClInclude Include="src\core\graphics\graphics.hpp" />
     <ClInclude Include="src\utils\shader\shader.hpp" />
     <ClInclude Include="src\main.hpp" />
