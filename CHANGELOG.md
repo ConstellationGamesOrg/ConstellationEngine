@@ -1,14 +1,15 @@
 # Changelog
 
-## [0.2.0]
+## [Unreleased]
 
 ### Added
 * Added camera module
+* Added deltatime
 
 -------------------------------------------------------------------------------------------------------------
 
 
-## [Unreleased]
+## [0.2.0]
 
 ### Added
 * Added functions to update the window, clear buffers and change the fill color
