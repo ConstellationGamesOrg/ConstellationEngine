@@ -81,6 +81,8 @@ int main() {
 
 	glfwSetCursorPosCallback(window.window, mouse_callback);
 	glfwSetScrollCallback(window.window, scroll_callback);
+	// Tell GLFW to capture our mouse
+	glfwSetInputMode(window.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	window.clearColor = { 0.5f, 0.0f, 0.4f, 1.0f };
 
