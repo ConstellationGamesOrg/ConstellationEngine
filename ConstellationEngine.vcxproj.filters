@@ -9,4 +9,7 @@
     <None Include="LICENSE" />
     <None Include="README.md" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\main.hpp" />
+  </ItemGroup>
 </Project>
