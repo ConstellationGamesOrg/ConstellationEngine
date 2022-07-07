@@ -20,7 +20,15 @@ float lastX = window.width / 2.0f;
 float lastY = window.height / 2.0f;
 bool firstMouse = true;
 
-// Callback Functions
+
+
+// Callback functions
+// ------------------
+// Whenever the window size changes (by OS or user resize) this callback function executes
+void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
+}
+
 // Input callback. Process all input
 void processInput(CE::core::Window window, CE::core::Camera* camera, float deltaTime) {
 
@@ -79,8 +87,11 @@ int main() {
 
 	window.create(800, 600, "Constellation Engine");
 
+	// Setup any callback functions
+	glfwSetFramebufferSizeCallback(window.window, framebufferSizeCallback);
 	glfwSetCursorPosCallback(window.window, mouse_callback);
 	glfwSetScrollCallback(window.window, scroll_callback);
+
 	// Tell GLFW to capture our mouse
 	glfwSetInputMode(window.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 

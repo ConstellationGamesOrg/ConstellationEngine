@@ -19,7 +19,6 @@ namespace CE {
 			}
 
 			glfwMakeContextCurrent(window);
-			glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
 			if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 				// Failed to initialize GLAD
@@ -60,8 +59,4 @@ namespace CE {
 			return 0;
 		}
 	}
-}
-
-void framebufferSizeCallback([[maybe_unused]] GLFWwindow* window, int width, int height) {
-	glViewport(0, 0, width, height);
 }

@@ -38,6 +38,4 @@ namespace CE {
 	}
 }
 
-void framebufferSizeCallback([[maybe_unused]] GLFWwindow* window, int width, int height);
-
 #endif // WINDOW_HPP
