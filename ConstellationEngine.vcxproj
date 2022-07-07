@@ -163,7 +163,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="contrib\glad\src\glad.cpp" />
-    <ClCompile Include="src\core\init\init.cpp" />
+    <ClCompile Include="src\core\graphics\graphics.cpp" />
+    <ClCompile Include="src\utils\shader\shader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\core\window\window.cpp" />
     <ClCompile Include="src\utils\utils.cpp" />
@@ -171,14 +172,20 @@
   <ItemGroup>
     <None Include="AUTHORS.md" />
     <None Include="CHANGELOG.md" />
+    <None Include="data\shaders\cube.frag" />
+    <None Include="data\shaders\cube.vert" />
     <None Include="LICENSE" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\init\init.hpp" />
+    <ClInclude Include="src\core\graphics\graphics.hpp" />
+    <ClInclude Include="src\utils\shader\shader.hpp" />
     <ClInclude Include="src\main.hpp" />
     <ClInclude Include="src\core\window\window.hpp" />
     <ClInclude Include="src\utils\utils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\textures\PixelLogo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

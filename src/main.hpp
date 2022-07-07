@@ -5,8 +5,9 @@
 
 // User-Defined Headers
 // --------------------
-#include "core/init/init.hpp"
 #include "core/window/window.hpp"
+#include "core/graphics/graphics.hpp"
+#include "utils/shader/shader.hpp"
 
 // 3rd Party Library Headers
 // -------------------------
@@ -23,6 +24,7 @@
 // Standard Library Headers
 // ------------------------
 #include <iostream>
+#include <vector>
 
 
 int main();
