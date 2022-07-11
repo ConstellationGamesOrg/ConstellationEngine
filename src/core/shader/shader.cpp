@@ -1,7 +1,7 @@
 #include "shader.hpp"
 
 namespace CE {
-	namespace utils {
+	namespace core {
 		// Constructor generates the shader on the fly
 		// ------------------------------------------------------------------------
 		Shader::Shader(const char* vertexPath, const char* fragmentPath) {

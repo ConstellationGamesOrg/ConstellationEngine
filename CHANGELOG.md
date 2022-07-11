@@ -6,6 +6,9 @@
 * Added camera module
 * Added deltatime
 
+### Changed
+* Moved shader from utils to core
+
 -------------------------------------------------------------------------------------------------------------
 
 

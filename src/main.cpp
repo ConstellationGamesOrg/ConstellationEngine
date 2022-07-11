@@ -99,7 +99,7 @@ int main() {
 
 	// Build and compile our shader program
 	// ------------------------------------
-	CE::utils::Shader cubeShader("data/shaders/cube.vert", "data/shaders/cube.frag");
+	CE::core::Shader cubeShader("data/shaders/cube.vert", "data/shaders/cube.frag");
 	
 	// Setup vertex data
 	std::vector<float> vertices = {
