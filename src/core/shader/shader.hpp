@@ -18,7 +18,7 @@
 #include <sstream>
 
 namespace CE {
-	namespace utils {
+	namespace core {
 		class Shader {
 		public:
 			unsigned int ID;
